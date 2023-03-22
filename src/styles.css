@@ -1,0 +1,92 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(./Roboto-Regular.ttf);
+}
+
+:root { /* onedark theme */
+    --bg-color: #2f343f;
+    --caret-color: #61afef;
+    --main-color: #61afef;
+    --sub-color: #eceff4;
+    --sub-alt-color: #262b34;
+    --text-color: #98c379;
+    --error-color: #e86c75;
+    --error-extra-color: #d62436;
+    --sub-main-color: #a5cae9;
+    --square-length: 30px;
+    --circle-length: calc(var(--square-length) / 2.5);
+}
+
+::selection {
+    color: var(--bg-color);
+    background-color: var(--text-color);
+}
+
+h1 {
+    margin-top: 30px;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Roboto Mono", sans-serif, Arial;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, var(--square-length));
+    grid-template-rows: repeat(10, var(--square-length));
+    user-select: none;
+}
+
+.board > div {
+    height: var(--square-length);
+    width: var(--square-length);
+    border: 1px solid var(--main-color);
+    background-color: var(--sub-color);
+}
+
+.board .ship {
+    background-color: var(--text-color);
+}
+
+.board .shipHit {
+    border: 1px solid var(--error-extra-color);
+    background-color: var(--error-color);
+    color: var(--error-extra-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--square-length);
+}
+
+.board .missedHit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--sub-main-color);
+}
+
+.board .missedHit .circle {
+    height: var(--circle-length);
+    width: var(--circle-length);
+    border-radius: var(--circle-length);
+    background-color: var(--main-color);
+}

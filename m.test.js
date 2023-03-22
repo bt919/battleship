@@ -1,4 +1,4 @@
-import { Ship, Gameboard, Player } from "./src/index.js";
+import { Ship, Gameboard, Player } from "./src/game.js";
 
 test("Ship methods hit and isSunk work", () => {
   const ship = Ship(1);
