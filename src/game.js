@@ -20,8 +20,8 @@ const Gameboard = () => {
     const ship = Ship(shipLength);
     ships.push(ship);
     let success = false;
-    if (mode === 0 && x + shipLength < 10) {
-      // we could place ship facing to the right
+    if (mode === 0 && x + shipLength <= 10) {
+      // we could place ship facing down
       let count = 0;
       while (count < shipLength) {
         board[x + count][y] = ship;
@@ -29,15 +29,15 @@ const Gameboard = () => {
       }
       success = true;
     } else if (mode === 1 && x - shipLength >= 0) {
-      // we could place ship facing to the left
+      // we could place ship facing up
       let count = 0;
       while (count < shipLength) {
         board[x - count][y] = ship;
         count += 1;
       }
       success = true;
-    } else if (mode === 2 && y + shipLength < 10) {
-      // we could place ship facing up
+    } else if (mode === 2 && y + shipLength <= 10) {
+      // we could place ship facing to the right
       let count = 0;
       while (count < shipLength) {
         board[x][y + count] = ship;
@@ -45,7 +45,7 @@ const Gameboard = () => {
       }
       success = true;
     } else if (mode === 3 && y - shipLength >= 0) {
-      // we could place ship facing down
+      // we could place ship facing to the left
       let count = 0;
       while (count < shipLength) {
         board[x][y - count] = ship;
@@ -96,4 +96,20 @@ const computerPlayer = () => {
   const computer = Player("computer");
 };
 
-export { Ship, Gameboard, Player };
+const initialBoard = () => {
+  const game = Gameboard();
+  game.placeShip(1, 9, 0, 0);
+  game.placeShip(2, 6, 1, 0);
+  game.placeShip(2, 0, 1, 0);
+  game.placeShip(1, 3, 2, 0);
+  game.placeShip(3, 6, 3, 0);
+  game.placeShip(1, 0, 5, 0);
+  game.placeShip(3, 0, 9, 0);
+  game.placeShip(2, 2, 5, 2);
+  game.placeShip(4, 4, 5, 2);
+  game.placeShip(1, 8, 8, 0);
+
+  return game;
+};
+
+export { Ship, Gameboard, Player, initialBoard };
