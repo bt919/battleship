@@ -82,18 +82,42 @@ const Gameboard = () => {
   return { receiveAttack, placeShip, isAllSunk, getBoard };
 };
 
-const Player = (name) => {
-  const isLose = (game) => game.isAllSunk();
+const Player = (game) => {
+  const isLose = () => game.isAllSunk();
 
   const attack = (player, x, y) => player.receiveAttack(x, y);
 
-  const receiveAttack = (x, y, game) => game.receiveAttack(x, y);
+  const receiveAttack = (x, y) => game.receiveAttack(x, y);
 
   return { isLose, attack, receiveAttack };
 };
 
-const computerPlayer = () => {
-  const computer = Player("computer");
+const computerPlayer = (game) => {
+  /* takes players board and attacks it */
+  const attacks = [];
+  for (let i = 0; i < 10; i += 1) {
+    for (let j = 0; j < 10; j += 1) {
+      attacks.push(`${i}|${j}`);
+    }
+  }
+
+  let j;
+  let temp;
+  for (let i = attacks.length - 1; i > 0; i -= 1) {
+    // shuffle the attacks
+    j = Math.floor(Math.random() * (i + 1));
+    temp = attacks[i];
+    attacks[i] = attacks[j];
+    attacks[j] = temp;
+  }
+
+  const randomAttack = () => {
+    const attack = attacks.shift();
+    const [x, y] = attack.split("|");
+    game.receiveAttack(x, y);
+  };
+
+  return { randomAttack, attacks };
 };
 
 const initialBoard = () => {
@@ -112,4 +136,20 @@ const initialBoard = () => {
   return game;
 };
 
-export { Ship, Gameboard, Player, initialBoard };
+const npcBoard = () => {
+  const game = Gameboard();
+  game.placeShip(1, 5, 5, 0);
+  game.placeShip(2, 6, 1, 2);
+  game.placeShip(2, 6, 7, 0);
+  game.placeShip(1, 8, 1, 0);
+  game.placeShip(3, 9, 3, 2);
+  game.placeShip(1, 3, 7, 0);
+  game.placeShip(3, 0, 9, 0);
+  game.placeShip(2, 3, 2, 0);
+  game.placeShip(4, 0, 0, 0);
+  game.placeShip(1, 8, 9, 0);
+
+  return game;
+};
+
+export { Ship, Gameboard, Player, initialBoard, npcBoard, computerPlayer };
